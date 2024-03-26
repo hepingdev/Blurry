@@ -157,6 +157,19 @@ public class Blurry {
         target.setImageDrawable(drawable);
       }
     }
+
+    public Bitmap get() {
+      if (async) throw new IllegalArgumentException("Use getAsync() instead of async().");
+      factor.width = bitmap.getWidth();
+      factor.height = bitmap.getHeight();
+      return Blur.of(context, bitmap, factor);
+    }
+
+    public void getAsync(BlurTask.Callback callback) {
+      factor.width = bitmap.getWidth();
+      factor.height = bitmap.getHeight();
+      new BlurTask(context, bitmap, factor, callback).execute();
+    }
   }
 
   public static class ImageComposer {
